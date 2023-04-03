@@ -1,0 +1,31 @@
+{
+  "source": {
+    "type": "csv",
+    "path": "data/source.csv",
+    "delimiter": ","
+  },
+  "transformations": [
+    {
+      "type": "filter",
+      "condition": "age >= 18"
+    },
+    {
+      "type": "rename",
+      "columns": {
+        "name": "full_name",
+        "dob": "date_of_birth"
+      }
+    },
+    {
+      "type": "calculate",
+      "column": "age",
+      "formula": "YEAR(CURRENT_DATE()) - YEAR(date_of_birth)"
+    }
+  ],
+  "destination": {
+    "type": "database",
+    "connection": "postgresql://user:password@localhost:5432/mydatabase",
+    "table": "people",
+    "mode": "append"
+  }
+}
