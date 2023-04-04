@@ -16,21 +16,32 @@ url = "https://web.archive.org/web/20200318083015/https://en.wikipedia.org/wiki/
 response = requests.get(url)
 soup = BeautifulSoup(response.content, "html.parser")
 
-table = soup.find("table", {"class": "wikitable sortable"})
-rows = table.findAll("tr")[1:]
 
-data = []
+data = pd.DataFrame(columns=["Name", "Market Cap (US$ Billion)"])
 
-for row in rows:
-    cols = row.findAll("td")
-    data.append({
-        "name": cols[1].text.strip(),
-        "market_cap": cols[2].text.strip()
-    })
+for row in soup.find_all('tbody')[2].find_all('tr'):
+    col = row.find_all('td')
 
-df = pd.DataFrame(data)
-df.columns = ['Bank Name', 'Market Cap (US$ Billion)']
-print(df.head())
+
+
+
+
+
+# table = soup.find("table", {"class": "wikitable sortable"})
+# rows = table.findAll("tr")[1:]
+
+# data = []
+
+# for row in rows:
+#     cols = row.findAll("td")
+#     data.append({
+#         "name": cols[1].text.strip(),
+#         "market_cap": cols[2].text.strip()
+#     })
+
+# df = pd.DataFrame(data)
+# df.columns = ['Bank Name', 'Market Cap (US$ Billion)']
+# print(df.head())
 
 
 
